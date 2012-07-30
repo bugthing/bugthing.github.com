@@ -40,4 +40,5 @@ kramdown:
     coderay_bold_every: 10
     coderay_css: style
 
-# to create a new post: vi ./_posts/$(date +"%d-%m-%Y")-something.md
+# NOTES:
+#   To create a new post: vi ./_posts/$(date +"%d-%m-%Y")-something.md
