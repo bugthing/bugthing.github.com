@@ -28,9 +28,22 @@ of googling ends me up with a real nice step by step guide to what to do.. sweet
 
 [Rivendell](http://www.rivendellaudio.org/)
 
-Once I ran through the guide, which went very smoothly I was left with a machine ready to 
-take over to my pals house and see if his misses wants to start a pod cast or radio
-show.
+[More help](http://rivendell.tryphon.org/wiki/Install_Rivendell_on_Ubuntu)
+
+Once I ran through the guide, which went very smoothly I was left with a machine
+nearly ready to be used... but alas, typically there are problems :(
+
+Jack seems to be throwing errors.. which I think is related to the latacy times...
+.. its a very old slow machine .. so I am looking at speeding the hardware abit before
+I start to get into a software solution...
+
+PROBLEM SOLVING GOES HERE
+
+... 
+
+Once its ready, I'll copy of music/jiggles over, put some demo podcast on and 
+take it over to my pals house and see if his misses wants to start a pod cast 
+or radio show.
 
 
 
