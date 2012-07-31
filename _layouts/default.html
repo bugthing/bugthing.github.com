@@ -18,7 +18,9 @@
         <header class="clearfix">
             <a href="/" class="logo">Ben Martin</a>
             <nav class="clearfix">
+                <!--
                 <a href="/" class="sel">Posts</a>
+                -->
             </nav>
             <section id="header-right" class="clearfix">
             </section>
@@ -33,36 +35,57 @@
             <div id="main-cont-wrap" class="clearfix">
 
                 <section id="left-col">
+                    {% if paginator.posts %}
+                        {% for post in paginator.posts %}
 
-                    {% for post in site.posts %}
-
-                        <!-- post - begin -->
-                        <entry>
-                        <div class="story clearfix">
-                            <div class="story-content">
-                                <div class="details">
-                                    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-                                    <p>
-                                        <span class="timestamp">
-                                            <updated>{{post.date | date: "%d %B %Y" }}</updated>
-                                            (<id>{{ post.id }}</id>)
-                                        </span>
-                                    </p>
+                            <!-- post - begin -->
+                            <entry>
+                            <div class="story clearfix">
+                                <div class="story-content">
+                                    <div class="details">
+                                        <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+                                        <p>
+                                            <span class="timestamp">
+                                                <updated>{{post.date | date: "%d %B %Y" }}</updated>
+                                                (<id>{{ post.id }}</id>)
+                                            </span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        </entry>
-                        <!-- post - end -->
+                            </entry>
+                            <!-- post - end -->
 
-                    {% endfor %}
-                    
-                    <!-- paged navigation -->
-                    <ul class="paged-navigation">
-                        <li class="prev"><a href="#" class="btn-default disabled">Prev</a></li>
-                        <li class="num">Page 1</li>
-                        <li class="next"><a href="#" class="btn-default">Next</a></li>
-                    </ul>
+                        {% endfor %}
+                        
+                        <!-- paged navigation -->
+                        <ul class="paged-navigation">
 
+                            {% if paginator.previous_page %}
+
+                                <li class="prev">
+                                {% if paginator.previous_page == 1 %}
+                                    <a href="/" class="btn-default">
+                                {% else %}
+                                    <a href="/page{{paginator.previous_page}}" class="btn-default">
+                                {% endif %}
+                                Prev</a></li>
+
+
+                            {% else %}
+                              <li class="prev"><a href="#" class="btn-default disabled">Prev</a></li>
+                            {% endif %}
+
+                            <li class="num">Page: {{paginator.page}} of {{paginator.total_pages}}</li>
+
+                            {% if paginator.next_page %}
+                              <li class="next"><a href="/page{{paginator.next_page}}" class="btn-default">Next</a></li>
+                            {% else %}
+                              <li class="next"><a href="#" class="btn-default disabled">Next</a></li>
+                            {% endif %}
+
+                        </ul>
+                    {% endif %}
                 </section> <!-- end #left-col -->
                 
                 <section id="right-col">
