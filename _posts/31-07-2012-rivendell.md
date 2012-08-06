@@ -37,9 +37,13 @@ Jack seems to be throwing errors.. which I think is related to the latacy times.
 .. its a very old slow machine .. so I am looking at speeding the hardware abit before
 I start to get into a software solution...
 
-PROBLEM SOLVING GOES HERE
+So my hardware was fine (I thought it might be a problem being as it pretty old)
+but it was not, it was the sample rate that I had not set ..  I tweaked things 
+and Jack and Rivendell now work nicely
 
-... 
+I did have trouble with PulseAudio and Jack... Audacious was not playing when jack
+was running (it was sorted jammed) .. I had to open Paluse Audio mixer and 
+tell Audacious to use Jack sink as its ouput.
 
 Once its ready, I'll copy of music/jiggles over, put some demo podcast on and 
 take it over to my pals house and see if his misses wants to start a pod cast 
