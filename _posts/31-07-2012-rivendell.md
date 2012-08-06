@@ -62,7 +62,7 @@ Copy of guide here:
  
 * Step 8  - I had problems using 4 periods, stuck to 2. (Might be hardware). Uncheck confirm close.
  
-* Step 12 - QT compile problem in 11.10 onwards. [Solution found](www.thevoiceasia.org/rivendell/Rivendell_2_on_Ubuntu_1104.pdf)
+* Step 12 - QT compile problem in 11.10 onwards. [Solution found](http://www.thevoiceasia.org/rivendell/Rivendell_2_on_Ubuntu_1104.pdf)
 
     Find this line:
         bnv_try_4="$CXX $QT_LIBS $LIBS -o bnv_qt_main bnv_qt_main.o moc_bnv_qt_test.o >/dev/null 2>/dev/null"
