@@ -23,8 +23,13 @@ Script here:
     
     This is a run down of the tips from the Aloha Ruby Conf
     You can see the ruby embedded in this file.
+
+    The -x flag is cool, I build this blog using Jekyll and with the -x flag I can
+    actually execute this post!
     
     #!/usr/bin/env ruby
+
+#!/usr/bin/env ruby
     
     # programmatically turn on warnings
     $VERBOSE = true
@@ -89,6 +94,26 @@ Script here:
     puts "Array - Use .zip       .. you can move through multiple arrays in lock step"
     puts "Array - Use .partition .. you can split up an array with a block that runs a yes/no"
     puts "Array - Use .flat_map  .. if the values are Array's, it flattens then and you just see the all values"
-    
-    __END__
 
+    # Array  things - .take and .drop
+    numbers = 1..10
+    p numbers.take(3)
+    p numbers.drop(3)
+    p numbers.take_while { |n| n <= 5 }
+    p numbers.drop_while { |n| n <= 5 }
+
+    # Array - .cycle is cool! (cycles basically returns a enumberator that just aways goes through array)
+    who = %w{ben jim}.cycle
+    (1 .. 10).each  do |n|
+      puts " #{who.next} gets #{n} sweets "
+    end
+    
+__END__
+
+
+This is more stuff!
+
+
+
+  During the talk James mentioned "Ruby Rogues" .. I looked this up added it my pod catcher and so far so good ..
+  there is also a mailing list .. [Sign up here](http://parlay.rubyrogues.com/?lrRef=vk357)
