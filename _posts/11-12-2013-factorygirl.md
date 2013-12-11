@@ -27,8 +27,8 @@ the above is backed with a factory defined like so:
 This served us fine for a while, but then we added some validation rules to a related model to enforce that
 events could not overlap.. so doing
 
-   create :event
-   create :event
+    create :event
+    create :event
 
 would cause a validation error as the 2 events have the same (or very simlar) start and end times.
 
@@ -47,17 +47,17 @@ We could address it like so
 
 Then do
 
-   create :event
-   create :event_in_4_hours
+    create :event
+    create :event_in_4_hours
 
 But that only solves a small problem, what if we need 3 events?
 We need [Transient attributes](http://robots.thoughtbot.com/factory-girl-2-2-your-new-best-friend/)
 
 Now we can do:
 
-   create :event
-   create :event, hours_from_now: 4
-   create :event, hours_from_now: 400
+    create :event
+    create :event, hours_from_now: 4
+    create :event, hours_from_now: 400
 
 And the events all start at a different time
 
