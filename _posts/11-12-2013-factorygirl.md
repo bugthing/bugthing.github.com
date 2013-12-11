@@ -61,18 +61,18 @@ Now we can do:
 
 And the events all start at a different time
 
-   FactoryGirl.define do
-     factory :event do
+    FactoryGirl.define do
+      factory :event do
 
-      # this block tells FactoryGirl what to arguments to ignore and applies a default:
-       ignore do
-         hours_from_now 2
-       end
+       # this block tells FactoryGirl what to arguments to ignore and applies a default:
+        ignore do
+          hours_from_now 2
+        end
 
-       start_at { (hours_from_now).hour.from_now }
-       end_at { (hours_from_now + 48).hours.from_now }
-     end
-   end
+        start_at { (hours_from_now).hour.from_now }
+        end_at { (hours_from_now + 48).hours.from_now }
+      end
+    end
 
 
 Sorted!
