@@ -11,7 +11,7 @@ Just found a well handy little trick to use when using FactoryGirl to generate m
 
 Within out tests we do this to create a default event for 48 hours, starting in 2 hours from now:
 
-   create :event
+    create :event
 
 the above is backed with a factory defined like so:
 
