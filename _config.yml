@@ -8,19 +8,12 @@ url: http://localhost:4000
 source:      .
 destination: ./_site
 plugins:     ./_plugins
-paginate:    10 
+paginate:    10
 future:      true
 lsi:         false
 pygments:    false
-markdown:    maruku
+markdown:    kramdown
 permalink:   date
-
-maruku:
-  use_tex:    false
-  use_divs:   true
-  png_engine: blahtex
-  png_dir:    images/latex
-  png_url:    /images/latex
 
 rdiscount:
   extensions: []
@@ -31,7 +24,6 @@ kramdown:
   entity_output: as_char
   toc_levels: 1..6
   use_coderay: false
-  
   coderay:
     coderay_wrap: div
     coderay_line_numbers: inline
