@@ -1,9 +1,7 @@
-safe:        false
-auto:        true
-server:      true
-server_port: 4000
-baseurl:    /
-url: http://localhost:4000
+safe:    false
+port:    5200
+baseurl: /
+url:     http://localhost:5200
 
 source:      .
 destination: ./_site
@@ -11,7 +9,7 @@ plugins:     ./_plugins
 paginate:    10
 future:      true
 lsi:         false
-pygments:    false
+highlighter: false
 markdown:    kramdown
 permalink:   date
 
