@@ -9,7 +9,7 @@ plugins:     ./_plugins
 paginate:    10
 future:      true
 lsi:         false
-highlighter: false
+highlighter: pygments
 markdown:    kramdown
 permalink:   date
 
