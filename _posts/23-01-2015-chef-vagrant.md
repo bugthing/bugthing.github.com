@@ -21,12 +21,12 @@ Get started
 
 Make a `Gemfile` like so:
 
-```rb
+~~~ruby
 source 'https://rubygems.org'
 
 gem 'knife-solo'
 gem 'berkshelf'
-```
+~~~
 
 Install the required gems with Bundler
 
@@ -41,13 +41,13 @@ Use knife to initialise the project, which creates some of the directories and f
 
 We're using Berkshelf to access community cookbooks, so lets make the `Berksfile` as we want
 
-```
+~~~ruby
 source 'https://supermarket.chef.io'
 
 metadata
 
 cookbook 'nginx'
-```
+~~~
 
 We'll be making custom recipies, so lets create our own cookbook
 
@@ -55,7 +55,7 @@ We'll be making custom recipies, so lets create our own cookbook
 
 We should create a `metadata.rb` in the root to tell Chef about our project
 
-```
+~~~ruby
 name             'chef-hack'
 maintainer       'Workplace Systems ltd.'
 maintainer_email 'info@workplacesystems.com'
@@ -65,7 +65,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.0.1'
 
 depends 'nginx'
-```
+~~~
 
 Prepare a machine
 -----------------
@@ -86,18 +86,18 @@ Vagrant is nice tool to setup virtual machines locally, so lets use it. First of
 
 Create some JSON to tell Chef about our box `nodes/192.168.33.10.json`
 
-```
+~~~ruby
 {
   "run_list": [
     "nginx",
     "workplace"
   ]
 }
-```
+~~~
 
 When we ran `vagrant init` a `Vagrantfile` was created, lets customise that file so Vagrant brings the machine up as we want.
 
-```
+~~~ruby
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -116,7 +116,7 @@ Vagrant.configure(2) do |config|
      chef.json = VAGRANT_JSON
   end
 end
-```
+~~~
 
 Nows let bring up the machine
 
@@ -168,9 +168,9 @@ As we are just hacking, lets just start by adding ruby code into `site-cookbooks
 clever we'd  group different functions in different recipes allowing us to seperate the funtions into roles, but for now
 lets just add the the 'default.rb'
 
-```
+~~~ruby
 execute "echo 'hello world' > /tmp/a_test_file.txt"
-```
+~~~
 
 `execute` is one of Chef's most basic methods, see [Chef Docs](http://docs.chef.io/search.html) for more
 
