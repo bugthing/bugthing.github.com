@@ -41,3 +41,13 @@ Now I can visit the web ui within the container from my machine
 
     $ wget http://webui.127-0-0-1.org.uk/
 
+If you want to remove the firewall rule once your done, use this:
+
+First find out the chain and line number for the rule you created
+
+    $ iptables -t nat -vnL --line-numbers
+
+Then delete it
+
+    $ iptables -t nat -D OUTPUT 12345
+
