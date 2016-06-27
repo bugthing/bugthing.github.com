@@ -5,6 +5,9 @@ tags: linux cli
 title: Turn off login for a linux machine
 ---
 
+BIG
+===
+
 Sometimes I want a linux machine to bootup into a command prompt (no user and password required).
 
 Clearly this is a massive security problem but for VM's and home exsperimental network it can be handy.
