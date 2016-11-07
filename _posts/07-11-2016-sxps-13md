@@ -1,0 +1,22 @@
+---
+layout: default
+categories: blog
+tags: linux hardware xps13
+title: XPS13 + Arch + updates = perfect linux laptop
+---
+
+My new job asked what laptop they should get me, I said the top spec XPS13 (9360) and the WD15 dock.
+
+It was delivered to my house and in a couple of hours I had it setup with full disk encryption, full systemd
+(mkincpio), btrfs, gnome, tmux, arch, etc. etc.
+
+After I started and made use of dock which seemingly worked perfectly, I noticed the machine would freeze
+once I had unplugged from the dock and plugged back in or if in when in suspend.
+
+Now I have updated the BIO to 1.0.7, it seems to be working well.
+
+I installed the update by copying the .exe file into my efi partition, hitting F12 during boot and selecting
+the BIO update option
+
+
+
