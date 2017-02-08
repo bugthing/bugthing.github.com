@@ -7,7 +7,7 @@ title: Take a btrfs snapshot on each successfull boot
 
 To try and keep my system bootable no matter what happens I use systemd to run a script that takes a btrfs snapshot and configures bootctl to add that snapshot into the boot menu.
 
-To do this first, write the following script here `/usr/local/bin/snapshot_current_system_state.sh` (and make it executable)
+To do this first, write the following script here **/usr/local/bin/snapshot_current_system_state.sh** (and make it executable)
 
     #!/bin/sh
 
@@ -35,7 +35,7 @@ To do this first, write the following script here `/usr/local/bin/snapshot_curre
 
     /usr/bin/sync
 
-Next, write the following systemd file `/etc/systemd/system/multi-user.target.wants/snapshot_current_system_state_upon_boot.service` (and enable it)
+Next, write the following systemd file **/etc/systemd/system/multi-user.target.wants/snapshot_current_system_state_upon_boot.service** (and enable it)
 
     [Unit]
     Description=Takes a snapshot of _current/ROOT after multi-user.target has been reached.
