@@ -18,5 +18,5 @@ Serve
 Start a new post
 ----------------
 
-    NEWPOST="./_posts/$(date +"%d-%m-%Y")-something.md"; head -6 _posts/01-08-2012-sudo.md > $NEWPOST; vi $NEWPOST
+    NEWPOST="./_posts/$(date +"%d-%m-%Y")-something.md"; head -6 _posts/01-08-2012-sudo.md >> $NEWPOST; vi $NEWPOST
 
