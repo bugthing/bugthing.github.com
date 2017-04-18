@@ -5,13 +5,16 @@ url:     http://localhost:5200
 
 source:      .
 destination: ./_site
-plugins:     ./_plugins
+plugins_dir:     ./_plugins
 paginate:    10
 future:      true
 lsi:         false
 highlighter: rouge
 markdown:    kramdown
 permalink:   date
+
+gems:
+  - jekyll-paginate
 
 rdiscount:
   extensions: []
@@ -21,7 +24,7 @@ kramdown:
   footnote_nr: 1
   entity_output: as_char
   toc_levels: 1..6
-  use_coderay: true
+  enable_coderay: true
   coderay:
     coderay_wrap: div
     coderay_line_numbers: inline
