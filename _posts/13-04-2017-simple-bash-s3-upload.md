@@ -2,7 +2,7 @@
 layout: default
 categories: blog
 tags: linux cli 
-title: A tip for users of sudo
+title: A simple bash script to move files to S3
 ---
 A directory is getting filled with little files containing log data, you wanna keep
 it but only kind archive style... ship it to S3!
