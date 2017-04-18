@@ -61,15 +61,7 @@ function move_files {
   done
 }
 
-function ensure_only_running {
-  if [ "$(pgrep -fn $0)" -ne "$(pgrep -fo $0)" ]; then
-    log "Detected multiple instances of $0 running, exiting."
-    exit 1
-  fi
-}
-
 log "Starting to move files ($DATESTART)"
-ensure_only_running
 move_files
 echo "Finished."
 ```
