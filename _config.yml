@@ -34,3 +34,5 @@ kramdown:
 # NOTES:
 #   To see example header: head _posts/01-08-2012-sudo.md
 #   To create a new post:  vi ./_posts/$(date +"%d-%m-%Y")-something.md
+
+theme: jekyll-theme-hacker
