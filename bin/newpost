@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+TITLE=$1
+FILE=${TITLE// /_}
+THEDATE=$(date +"%Y-%m-%d")
+
+echo "Creating new blog post: $FILE ($THEDATE)..."
+
+cat << EOF > "./_posts/$THEDATE-$FILE.markdown"
+---
+layout: default
+title: $TITLE
+---
+
+Add your page content  in markdown here
+
+EOF
