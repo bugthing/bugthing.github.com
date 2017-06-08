@@ -1,24 +1,41 @@
 ---
 layout: default
-categories: pages
-title: Welcome <span class="subtitle"> to the blog I keep at github.com ...</span>
+title: bugthing has some notes
 ---
-<p>
-This is the github.io user page for <strong>  bugthing </strong>.
-</p>
 
-<p>
-I am UK resident with many years of web development experience, mainly
-focused on dynamic languages like Ruby, JavaScript and Perl.
-</p>
+<ul>
+{% if paginator.posts %}
+  {% for post in paginator.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+{% endif %}
+</ul>
 
-<p>
-This blog is for my personal use to put notes upon for reference, so I
-apologies if what you find is completely wrong, its not like I know what
-I am doing! ;)
-</p>
+<ul class="paged-navigation">
 
-<p>
-Subjects on this blog will be about general assorted geekery mainly
-focused on web development and linux related things.
-</p>
+    {% if paginator.previous_page %}
+
+        <li class="prev">
+        {% if paginator.previous_page == 1 %}
+            <a href="/" class="btn-default">
+        {% else %}
+            <a href="/page{{paginator.previous_page}}" class="btn-default">
+        {% endif %}
+        Prev</a></li>
+
+
+    {% else %}
+      <li class="prev"><a href="#" class="btn-default disabled">Prev</a></li>
+    {% endif %}
+
+    <li class="num">Page: {{paginator.page}} of {{paginator.total_pages}}</li>
+
+    {% if paginator.next_page %}
+      <li class="next"><a href="/page{{paginator.next_page}}" class="btn-default">Next</a></li>
+    {% else %}
+      <li class="next"><a href="#" class="btn-default disabled">Next</a></li>
+    {% endif %}
+
+</ul>

@@ -1,28 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>Benjamin Martin</title>
-    <meta name="author" content="Ben Martin" />
-    <link rel="shortcut icon" href="/images/favicon.ico" />
-    <link rel="icon" href="/images/favicon.ico"  type="image/x-icon" />
-    <link rel="stylesheet" href="/stylesheets/stylesheet.css" type="text/css" />
-    <!--[if IE]>
-        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> 
-    <link href="http://coderwall.com/stylesheets/jquery.coderwall.css" media="all" rel="stylesheet" type="text/css">
-    <script src="http://coderwall.com/javascripts/jquery.coderwall.js"></script>
-</head>
-<body>
+  <meta charset="utf-8">
 
+  <title>{{ page.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <meta name="author" content="{{ site.email }}">
+
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+  <link rel="icon" href="/images/favicon.ico"  type="image/x-icon" />
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+  <body>
     <!-- start #header-wrap -->
     <div id="header-wrap">
         <header class="clearfix">
             <a href="/" class="logo">Ben Martin</a>
             <nav class="clearfix">
                 <!--
-                <a href="/" class="sel">Posts</a>
                 -->
             </nav>
             <section id="header-right" class="clearfix">
@@ -37,64 +39,6 @@
             <br>
             <div id="main-cont-wrap" class="clearfix">
 
-                <section id="left-col">
-                    {% if paginator.posts %}
-                        {% for post in paginator.posts %}
-
-                            <!-- post - begin -->
-                            <entry>
-                            <div class="story clearfix">
-                                <div class="story-content">
-                                    <div class="details">
-                                        <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-                                        <p>
-                                            <span class="timestamp">
-                                                <updated>{{post.date | date: "%d %B %Y" }}</updated>
-                                                (<id>{{ post.id }}</id>)
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            </entry>
-                            <!-- post - end -->
-
-                        {% endfor %}
-                        
-                        <!-- paged navigation -->
-                        <ul class="paged-navigation">
-
-                            {% if paginator.previous_page %}
-
-                                <li class="prev">
-                                {% if paginator.previous_page == 1 %}
-                                    <a href="/" class="btn-default">
-                                {% else %}
-                                    <a href="/page{{paginator.previous_page}}" class="btn-default">
-                                {% endif %}
-                                Prev</a></li>
-
-
-                            {% else %}
-                              <li class="prev"><a href="#" class="btn-default disabled">Prev</a></li>
-                            {% endif %}
-
-                            <li class="num">Page: {{paginator.page}} of {{paginator.total_pages}}</li>
-
-                            {% if paginator.next_page %}
-                              <li class="next"><a href="/page{{paginator.next_page}}" class="btn-default">Next</a></li>
-                            {% else %}
-                              <li class="next"><a href="#" class="btn-default disabled">Next</a></li>
-                            {% endif %}
-
-                        </ul>
-
-                        <section class="coderwall" data-coderwall-username="bugthing" data-coderwall-orientation="vertical"></section>
-
-                    {% endif %}
-
-                </section> <!-- end #left-col -->
-                
                 <section id="right-col">
                     <div class="block">
                         <h2>{{ page.title }}</h2>
@@ -103,7 +47,7 @@
                 </section> <!-- end #right-col -->
 
             </div> <!-- end #main-cont-wrap -->
-            
+
             <footer>
                 <ul class="data">
                     <!-- <li><a href="#">place holder</a></li> -->
@@ -113,10 +57,5 @@
         </div> <!-- end #core-content -->
 
     </div> <!-- end #core-wrap -->
-
-    <!-- javascripts - includes - start -->
-    <script src="/javascripts/main.js"></script>
-    <!-- javascripts - includes - end -->
-
-</body>
+  </body>
 </html>

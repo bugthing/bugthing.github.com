@@ -1,38 +1,22 @@
-safe:    false
-port:    5200
-baseurl: /
-url:     http://localhost:5200
+title: bugthing puts notes on the web
+email: benjamin2473565@hotmail.com
+description: >
+  Sometimes I do stuff on my computer and I want
+  to make a reference for me to check in the future.
+  This is that thing.
+baseurl: ""
+url: ""
+twitter_username: bugthing
+github_username: bugthing
+repository: bugthing/bugthing.github.com
 
-source:      .
-destination: ./_site
-plugins:     ./_plugins
-paginate:    10
-paginate_path: "/posts/page:num/"
-future:      true
-lsi:         false
-highlighter: rouge
-markdown:    kramdown
-permalink:   date
+# Pagination settings
+paginate: 10
 
-rdiscount:
-  extensions: []
-
-kramdown:
-  auto_ids: true,
-  footnote_nr: 1
-  entity_output: as_char
-  toc_levels: 1..6
-  use_coderay: true
-  coderay:
-    coderay_wrap: div
-    coderay_line_numbers: inline
-    coderay_line_numbers_start: 1
-    coderay_tab_width: 4
-    coderay_bold_every: 10
-    coderay_css: style
-
-# NOTES:
-#   To see example header: head _posts/01-08-2012-sudo.md
-#   To create a new post:  vi ./_posts/$(date +"%d-%m-%Y")-something.md
-
-theme: jekyll-theme-hacker
+# Build settings
+markdown: kramdown
+gems:
+  - jekyll-paginate
+exclude:
+  - Gemfile
+  - Gemfile.lock
