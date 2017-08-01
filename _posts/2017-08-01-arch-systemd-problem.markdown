@@ -2,8 +2,6 @@
 layout: default
 title: Arch broke and it was awesome!
 ---
-Arch broke and it was awesome!
-
 I use Arch Linux running on an encrypted root filesystem (btrfs)
 The other day I rebooted and it could not decrypt my file system .. I was faced with this:
 
