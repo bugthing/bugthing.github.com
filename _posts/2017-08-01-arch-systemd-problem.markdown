@@ -1,6 +1,6 @@
 ---
 layout: default
-title: arch-systemd-problem
+title: Arch broke and it was awesome!
 ---
 Arch broke and it was awesome!
 
@@ -20,7 +20,7 @@ the previous version of systemd. After a reboot I could enter my password and dc
 
 I reported this problem on the arch forum to see if other had same issue, turns out they do and there is a fix on the way
 
-[my post](https://bbs.archlinux.org/viewtopic.php?id=228672)
+[already reported issue](https://bbs.archlinux.org/viewtopic.php?id=228670)
 
 I am now waiting for a newer version of systemd to turn up.. so for now run this to update:
 
