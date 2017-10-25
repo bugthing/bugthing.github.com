@@ -41,6 +41,14 @@ systemctl enable systemd-resolved.service
 systemctl start systemd-resolved.service
 ```
 
+I also discovered I had to tweak NetworkManager.conf (as I use that on my linux desktop)
+so I open `/etc/NetworkManager/NetworkManager.conf` and add `dns=none` to the `main` section
+
+```
+[main]
+dns=none
+```
+
 I then used to following command, which configured my machine to send network traffic over the VPN
 
     $ sudo openvpn ./AirVPN_Europe_TCP-443.ovpn
