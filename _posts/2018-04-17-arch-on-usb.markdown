@@ -39,13 +39,13 @@ Also create a dir to mount the boot partition, then mount it
     $ mkdir /mnt/boot
     $ mount /dev/sda1 /mnt/boot
 
-The following bootstraps an Arch installation in a given director. This basically
+The following bootstraps an Arch installation in a given directory. This basically
 creates all directories and files required to run Arch Linux.
 
     $ pacstrap /mnt base
 
 As part of the linux boot process the `/etc/fstab` file is read to discover which
-devices should be mounted, where and which options. This generates the /etc/fstab
+devices should be mounted, where and with which options. This generates the /etc/fstab
 
     $ genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -137,6 +137,7 @@ Nearly done, we just want some extra packages so lets add them now
         scrot                     \
         stow                      \
         mpd                       \
+        ncmpcpp                   \
         pass                      \
         vim                       \
         tmux                      \
@@ -160,7 +161,7 @@ Install and configure the boot loader
     initrd /intel-ucode.img
     options root=PARTUUID=<blah blah> rootfstype=ext4 add_efi_memmap
 
-Enable any services you want the system starts
+Enable any services you want when the system starts
 
     $ systemctl enable docker
     $ systemctl enable sshd
