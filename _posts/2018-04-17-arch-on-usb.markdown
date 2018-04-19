@@ -4,9 +4,9 @@ categories: blog
 tags: linux
 title: Install Arch on a usb stick
 ---
-Some steps to follow in order to install Arch linux on a USB stick (from an existing Arch Linux)
+Some steps to follow in order to install Arch Linux on a USB stick (from an existing Arch Linux)
 
-First install the scripts required to install Arch.
+First, install the scripts required to install Arch.
 
     $ sudo pacman -S arch-install-scripts
 
@@ -15,7 +15,7 @@ Insert the USB stick and find out which device is has been assigned.
     $ lsblk
 
 From here we will assume `/dev/sda`.
-Partition the USB as required. Here we will have 1 boot partition and 1 root partition.
+Partition the USB stick as required. Here we will have 1 boot partition and 1 root partition.
 
     $ gdisk /dev/sda
     o<confirm>
@@ -34,7 +34,7 @@ Now lets mount the root parition
 
     $ mount /dev/sda2 /mnt
 
-Also create a dir to mount the boot partition, then mount it
+Also create a dir to mount the boot partition in, then mount it
 
     $ mkdir /mnt/boot
     $ mount /dev/sda1 /mnt/boot
@@ -59,21 +59,22 @@ You can now see the fstab we generated in `/etc/`, open it and clean it up if re
     <clean up, swap, etc.>
 
 Now do some jobs to configure the machine.
-Set the timezone
+
+Set the timezone:
 
     $ ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 
-Set the locale
+Set the locale:
 
     $ vi /etc/locale.gen
     <uncomment your locale>
     $ locale-gen
 
-Set keymap
+Set keymap:
 
     $ echo KEYMAP=uk > /etc/vconsole.conf
 
-Set hostname
+Set hostname:
 
     $ echo archusb > /etc/hostname
     $ vi /etc/hosts
@@ -83,16 +84,95 @@ Set hostname
 
 Nearly done, we just want some extra packages so lets add them now
 
-    $ pacman -S                   \
-        dialog                    \
-        wpa_supplicant            \
-        iw                        \
-        base-devel                \
-        intel-ucode               \
+    $ pacman -S        \
+        dialog         \
+        wpa_supplicant \
+        iw             \
+        sudo           \
+        intel-ucode
+
+Set a password for the root user:
+
+    $ passwd
+
+Configure mkinitcpio which creates the initial ramdisk environment:
+
+    $ vi /etc/mkinitcpio.conf
+    MODULES="vfat aes_x86_64 crc32c-intel i915 ata_generic"
+
+    $ mkinitcpio -p linux
+
+Install and configure the boot loader:
+
+    $ bootctl --path=/boot install
+    $ cp /usr/share/systemd/bootctl/arch.conf /boot/loader/entries/arch.conf
+    $ ls -sl /dev/disk/by-partuuid/
+    $ vi /boot/loader/entries/arch.conf
+    initrd /intel-ucode.img
+    options root=PARTUUID=<blah blah> rootfstype=ext4 add_efi_memmap
+
+Now you are ready to boot using your newly created Arch Linux USB stick. Lets unmount
+sync and reboot:
+
+    $ exit
+    $ exit
+    $ umount /mnt/boot
+    $ umount /mnt
+    $ sync
+    $ reboot
+
+Now you can boot into a very basic Arch Linux, you can build it exactly how you want it.
+
+You might want to start by setting up your own user (here we create user *pleb*):
+
+    $ useradd -m -g users -G network,power,docker,storage,audio,wheel -s bash pleb
+    $ passwd pleb
+
+Logout and back in your new user:
+
+    $ exit
+    username: pleb
+    password: computer1
+
+You can build any system you prefer, server, embedded, desktop, anything.
+Here are some packages you might want to create a desktop machine for development
+making use of a very lightweight desktop (i3):
+
+    $ sudo pacman -S              \
         arch-install-scripts      \
+        i3                        \
+        gnome-icon-theme          \
         archlinux-menus           \
+        gvfs-mtp                  \
+        hdparm                    \
+        gpaste                    \
+        libmtp                    \
+        libyaml                   \
+        network-manager-applet    \
+        networkmanager            \
+        pavucontrol               \
+        pulseaudio                \
+        pulseaudio-bluetooth      \
+        hplip                     \
+        python-xdg                \
+        ttf-bitstream-vera        \
+        ttf-dejavu                \
+        xorg-server               \
+        xorg-xfontsel             \
+        xorg-xinit                \
+        xorg-xrandr               \
+        rxvt-unicode              \
+        blueman                   \
+        bluez                     \
+        bluez-utils               \
+        nautilus                  \
+        redshift                  \
+        scrot                     \
+        stow                      \
+        mpd                       \
+        ncmpcpp                   \
+        pass                      \
         git                       \
-        sudo                      \
         less                      \
         ufw                       \
         openssh                   \
@@ -105,75 +185,35 @@ Nearly done, we just want some extra packages so lets add them now
         dunst                     \
         feh                       \
         fzf                       \
+        ctags                     \
         ripgrep                   \
-        gpaste                    \
-        gvfs-mtp                  \
-        hdparm                    \
-        hplip                     \
-        i3                        \
-        gnome-icon-theme          \
-        blueman                   \
-        bluez                     \
-        bluez-utils               \
         libmariadbclient          \
-        libmtp                    \
-        libyaml                   \
-        nautilus                  \
-        network-manager-applet    \
-        networkmanager            \
-        pavucontrol               \
-        pulseaudio                \
-        pulseaudio-bluetooth      \
-        python-xdg                \
-        ranger                    \
-        redshift                  \
-        rxvt-unicode              \
-        ttf-bitstream-vera        \
-        ttf-dejavu                \
-        xorg-server               \
-        xorg-xfontsel             \
-        xorg-xinit                \
-        xorg-xrandr               \
-        scrot                     \
-        stow                      \
-        mpd                       \
-        ncmpcpp                   \
-        pass                      \
         vim                       \
         tmux                      \
-        chromium                  \
-        firefox                   \
-        youtube-dl
+        firefox
 
-Configure mkinitcpio which creates the initial ramdisk environment
+Enable the services you want so they start when the system starts:
 
-    $ vi /etc/mkinitcpio.conf
-    MODULES="vfat aes_x86_64 crc32c-intel i915 ata_generic"
+    $ sudo systemctl enable docker
+    $ sudo systemctl enable sshd
 
-    $ mkinitcpio -p linux
+Install asdf to install and switch language versions (see: https://github.com/asdf-vm/asdf):
 
-Install and configure the boot loader
+    $ git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.4.3
+    $ echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
+    $ echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
+    $ source ~/.bashrc
+    $ asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
+    $ asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+    $ asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
+    $ asdf plugin-add crystal https://github.com/marciogm/asdf-crystal.git
+    $ asdf plugin-add java https://github.com/skotchpine/asdf-java
+    $ asdf plugin-add python https://github.com/tuvistavie/asdf-python.git
+    $ asdf plugin-add golang https://github.com/kennyp/asdf-golang.git
+    $ asdf plugin-add elm https://github.com/vic/asdf-elm.git
+    $ asdf plugin-add haskell https://github.com/vic/asdf-haskell.git
 
-    $ bootctl --path=/boot install
-    $ cp /usr/share/systemd/bootctl/arch.conf /boot/loader/entries/arch.conf
-    $ ls -sl /dev/disk/by-partuuid/
-    $ vi /boot/loader/entries/arch.conf
-    initrd /intel-ucode.img
-    options root=PARTUUID=<blah blah> rootfstype=ext4 add_efi_memmap
-
-Enable any services you want when the system starts
-
-    $ systemctl enable docker
-    $ systemctl enable sshd
-
-Setup password and your own user (here we create user *pleb*)
-
-    $ passwd
-    $ useradd -m -g users -G network,power,docker,storage,audio,wheel -s bash pleb
-    $ passwd pleb
-    $ su - pleb
-
-Configure X
+Configure your desktop:
 
     $ cp /etc/X11/xinit/xinitrc ~/.xinitrc
 
@@ -182,20 +222,14 @@ Configure X
     [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
     # start pulseaudio
     exec pulseaudio --start &
-    # set DISPLAY (mainly for dunst)
+    # set DISPLAY
     systemctl --user import-environment DISPLAY
     # start ssh-agent
     eval $(ssh-agent)
     # desktop
     exec i3
 
-Now you are ready to boot using your newly created Arch Linux USB stick. Lets unmount
-sync and reboot:
+And start it:
 
-    $ exit
-    $ exit
-    $ umount /mnt/boot
-    $ umount /mnt
-    $ sync
-    $ reboot
+    $ startx
 
