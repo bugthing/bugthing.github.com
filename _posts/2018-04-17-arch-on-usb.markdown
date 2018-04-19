@@ -111,7 +111,7 @@ Install and configure the boot loader:
     initrd /intel-ucode.img
     options root=PARTUUID=<blah blah> rootfstype=ext4 add_efi_memmap
 
-Now you are ready to boot using your newly created Arch Linux USB stick. Lets unmount
+Now you are ready to boot using your newly created Arch Linux USB stick. Lets unmount,
 sync and reboot:
 
     $ exit
@@ -122,20 +122,8 @@ sync and reboot:
     $ reboot
 
 Now you can boot into a very basic Arch Linux, you can build it exactly how you want it.
-
-You might want to start by setting up your own user (here we create user *pleb*):
-
-    $ useradd -m -g users -G network,power,docker,storage,audio,wheel -s bash pleb
-    $ passwd pleb
-
-Logout and back in your new user:
-
-    $ exit
-    username: pleb
-    password: computer1
-
 You can build any system you prefer, server, embedded, desktop, anything.
-Here are some packages you might want to create a desktop machine for development
+Here are some packages you might want in order to create a desktop machine for development
 making use of a very lightweight desktop (i3):
 
     $ sudo pacman -S              \
@@ -146,6 +134,9 @@ making use of a very lightweight desktop (i3):
         gvfs-mtp                  \
         hdparm                    \
         gpaste                    \
+        dmenu                     \
+        dunst                     \
+        feh                       \
         libmtp                    \
         libyaml                   \
         network-manager-applet    \
@@ -181,9 +172,6 @@ making use of a very lightweight desktop (i3):
         file                      \
         imagemagick               \
         cups                      \
-        dmenu                     \
-        dunst                     \
-        feh                       \
         fzf                       \
         ctags                     \
         ripgrep                   \
@@ -194,8 +182,19 @@ making use of a very lightweight desktop (i3):
 
 Enable the services you want so they start when the system starts:
 
-    $ sudo systemctl enable docker
-    $ sudo systemctl enable sshd
+    $ systemctl enable docker
+    $ systemctl enable sshd
+
+You'll want to add a user to login as: (here we create user *developer*):
+
+    $ useradd -m -g users -G network,power,docker,storage,audio,wheel -s bash developer
+    $ passwd developer
+
+Logout and back in as your new user:
+
+    $ exit
+    username: developer
+    password: computers
 
 Install asdf to install and switch language versions (see: https://github.com/asdf-vm/asdf):
 
