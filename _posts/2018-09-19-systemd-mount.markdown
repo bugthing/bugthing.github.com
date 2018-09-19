@@ -33,5 +33,5 @@ add the text like so:
 
 the just ran
 
-    $ sudo systemctl enable run-grey\\x2dusb\\x2dhdd.mount
-    $ sudo systemctl start run-grey\\x2dusb\\x2dhdd.mount
+    $ sudo systemctl enable 'run-grey\\x2dusb\\x2dhdd.mount'
+    $ sudo systemctl start 'run-grey\\x2dusb\\x2dhdd.mount'
