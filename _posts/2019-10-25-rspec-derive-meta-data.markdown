@@ -1,6 +1,6 @@
 ---
 layout: default
-title: rspec-derive-meta-data
+title: Derive metadata for rspec test
 ---
 
 Sometimes I need to add metadata tags to rspec tests, here is a way to derive the metadata so I dont have to add the data to every test
