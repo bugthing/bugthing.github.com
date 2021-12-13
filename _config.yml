@@ -1,21 +1,20 @@
 title: bugthing puts notes on the web
 email: benjamin2473565@hotmail.com
-description: >
+description: >- # this means to ignore newlines until "baseurl:"
   Sometimes I do stuff on my computer and I want
   to make a reference for me to check in the future.
   This is that thing.
 baseurl: ""
 url: ""
 twitter_username: bugthing
-github_username: bugthing
-repository: bugthing/bugthing.github.com
-
-# Pagination settings
-paginate: 10
+github_username:  bugthing
 
 # Build settings
+paginate: 10
 markdown: kramdown
-gems:
+theme: minima
+plugins:
+  - jekyll-feed
   - jekyll-paginate
 exclude:
   - Gemfile

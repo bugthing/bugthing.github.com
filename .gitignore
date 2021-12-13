@@ -1,2 +1,3 @@
 _site/
 .tool-versions
+.jekyll-cache/

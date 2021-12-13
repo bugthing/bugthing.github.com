@@ -2,12 +2,13 @@ source 'https://rubygems.org'
 
 ruby RUBY_VERSION
 
-gem 'jekyll', '~> 3.9'
+gem 'jekyll'
 
-gem 'minima', '~> 2.5'
+gem 'minima'
+gem 'webrick'
 
 group :jekyll_plugins do
-  gem 'github-pages', '~> 209'
-  gem 'jekyll-feed', '~> 0.15'
-  gem 'jekyll-paginate', '~> 1.1'
+  #gem 'github-pages'
+  gem 'jekyll-feed'
+  gem 'jekyll-paginate'
 end
