@@ -14,12 +14,12 @@ To set the scene, I operated on the PC from my laptop both of which were on the 
 CoreOS Installation
 -------------------
 
-[Downloaded and burnt to USB](https://getfedora.org/coreos/download?tab=metal_virtualized&stream=stable
+[Downloaded and burnt to USB](https://getfedora.org/coreos/download?tab=metal_virtualized&stream=stable)
 
 [Produced YAML file of config](https://docs.fedoraproject.org/en-US/fedora-coreos/producing-ign/#_writing_the_butane_config)
-this config sets a ssh key, hostname, console message level and the kubernetes yum repo
+this config sets a ssh key, hostname, console message level and the kubernetes yum repo. (add you ssh public key inplace of `<secret>`)
 
-      vi home-server.yml
+      tee home-server.yml <<EOF
         variant: fcos
         version: 1.4.0
         passwd:
@@ -51,6 +51,7 @@ this config sets a ssh key, hostname, console message level and the kubernetes y
                   repo_gpgcheck=1
                   gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
                   #exclude=kube*
+      EOF
 
 Convert the above to an ignition file which coreos-installer expects.
 
