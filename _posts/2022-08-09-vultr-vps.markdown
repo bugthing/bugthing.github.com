@@ -7,7 +7,7 @@ I had to move my VPS.. I wanted Fedora CoreOS and I found Vultr. Here are my not
 
 ## Initial setup
 
-Signed up to Vultr via: getvultr.com/lad
+Signed up to Vultr [here](htts://getvultr.com/lad)
 
 Created a Fedora CoreOS VM via the web GUI. (I later used and UI to setup a firewall for the server.)
 
@@ -40,6 +40,7 @@ storage:
       contents:
         inline: |
           net.ipv4.ip_unprivileged_port_start = 80
+
 systemd:
   units:
     - name: rpm-ostree-install.service
@@ -55,8 +56,21 @@ systemd:
         [Service]
         Type=oneshot
         RemainAfterExit=yes
-        ExecStart=/usr/bin/rpm-ostree install --apply-live --allow-inactive neovim tmux
+        ExecStart=/usr/bin/rpm-ostree install --apply-live --allow-inactive neovim tmux sshguard
         ExecStart=/bin/touch /var/lib/%N.stamp
+
+        [Install]
+        WantedBy=multi-user.target
+    - name: sshguard.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=SSHGuard - blocks brute-force login attempts
+        After=network-online.target iptables-restore.service
+
+        [Service]
+        ExecStart=sshguard
+        Restart=always
 
         [Install]
         WantedBy=multi-user.target
@@ -68,7 +82,7 @@ Convert to igintion format (JSON)
 
 Upload to somewhere
 
-      scp vultr.ign vps:/home/benjamin/container-volumes/nginx/sites/madeofpaper/
+      scp vultr.ign vps:/home/user/container-volumes/nginx/sites/madeofpaper/
 
 Issue installation command (via console in Vultr web GUI)
 
