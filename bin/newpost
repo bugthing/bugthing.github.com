@@ -16,4 +16,4 @@ Add your page content  in markdown here
 
 EOF
 
-vim "./_posts/$THEDATE-$FILE.markdown"
+nvim "./_posts/$THEDATE-$FILE.markdown"

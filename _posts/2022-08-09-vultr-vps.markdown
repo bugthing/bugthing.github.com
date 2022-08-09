@@ -1,0 +1,183 @@
+---
+layout: default
+title: Fedora CoreOS on Vultr
+---
+
+I had to move my VPS.. I wanted Fedora CoreOS and I found Vultr. Here are my notes on how I set it up.
+
+## Initial setup
+
+Signed up to Vultr via: getvultr.com/lad
+
+Created a Fedora CoreOS VM via the web GUI. (I later used and UI to setup a firewall for the server.)
+
+Built vultr.yml file
+
+```
+variant: fcos
+version: 1.4.0
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - ssh-rsa AAAAB3...
+      groups: [ sudo, docker ]
+storage:
+  files:
+    - path: /etc/sysctl.d/20-silence-audit.conf
+      mode: 0644
+      contents:
+        inline: |
+          # change console message logging level from DEBUG (7) to WARNING (4)
+          kernel.printk=4
+    - path: /etc/hostname
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: |
+          mop
+    - path: /etc/sysctl.d/90-unprivileged_port_start.conf
+      contents:
+        inline: |
+          net.ipv4.ip_unprivileged_port_start = 80
+systemd:
+  units:
+    - name: rpm-ostree-install.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Layer in packages via rpm-ostree
+        Wants=network-online.target
+        After=network-online.target
+        Before=zincati.service
+        ConditionPathExists=!/var/lib/%N.stamp
+
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        ExecStart=/usr/bin/rpm-ostree install --apply-live --allow-inactive neovim tmux
+        ExecStart=/bin/touch /var/lib/%N.stamp
+
+        [Install]
+        WantedBy=multi-user.target
+```
+
+Convert to igintion format (JSON)
+
+      docker run -it --rm -v $PWD/:/bld quay.io/coreos/butane:release --pretty --strict /bld/vultr.yml --files-dir /bld > vultr.ign
+
+Upload to somewhere
+
+      scp vultr.ign vps:/home/benjamin/container-volumes/nginx/sites/madeofpaper/
+
+Issue installation command (via console in Vultr web GUI)
+
+    sudo coreos-installer install /dev/vda --ignition-url https://www.someplace.co.uk/vultr.ign
+
+Remove ISO from Vultr using the web GUI (in the settings)
+
+Server is up and running
+
+      ssh -i .ssh/id_rsa core@ip.vultrusercontent.com
+
+## Configuration
+
+Now the server is up, I needed to configure things abit.,
+
+Create a place for my container volumes to exist:
+
+    mkdir $HOME/container-volumes
+
+Allow low port number to be started by my user: (simplest, probs not that secure)
+I later added this file creation to to vultr.yml file
+
+    sudo sysctl net.ipv4.ip_unprivileged_port_start=80
+
+Next I created the podman pod
+
+    podman pod create -n mop -p 80:80 -p 443:443
+
+and containers within it
+
+    podman run --pod mop -d --name=magicmirror --restart=always \
+      -v $HOME/container-volumes/magicmirror/config:/opt/magic_mirror/config:z \
+      -v $HOME/container-volumes/magicmirror/modules:/opt/magic_mirror/modules:z \
+      -v $HOME/container-volumes/magicmirror/css:/opt/magic_mirror/css:z \
+      karsten13/magicmirror npm run server
+
+    podman run --pod mop -d --name=nginx --restart=always -v $HOME/container-volumes/nginx:/etc/nginx:Z nginx
+
+I also wanted this stuff to start up when the server reboots, so used systemd like this:
+
+    mkdir -p $HOME/.config/systemd/user
+    cd $HOME/.config/systemd/user
+    podman generate systemd --new --files --name mop
+    systemctl --user daemon-reload
+    systemctl --user start pod-mop.service
+    systemctl --user enable pod-mop.service
+
+## Nginx notes
+
+My nginx server does static content, proxying and SSL. For SSL I did the following:
+
+The hosted sites are configured in nginx like so
+```
+server {
+    server_name madeofpaper.co.uk www.madeofpaper.co.uk;
+    listen 80;
+
+    location /.well-known/acme-challenge/ {
+        root /etc/nginx/certbot;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    server_name madeofpaper.co.uk www.madeofpaper.co.uk;
+
+    ssl_certificate /etc/nginx/letsencrypt/live/madeofpaper.co.uk/fullchain.pem;
+    ssl_certificate_key /etc/nginx/letsencrypt/live/madeofpaper.co.uk/privkey.pem;
+
+    root /etc/nginx/sites/madeofpaper;
+}
+```
+
+Meaning we can add domains to certbot config as follows. Will output cert files into mounted volume
+
+    podman run --pod mop -it \
+      -v $HOME/container-volumes/nginx/letsencrypt:/etc/letsencrypt:Z \
+      -v $HOME/container-volumes/nginx:/etc/nginx:Z \
+      certbot/certbot certonly --webroot --webroot-path /etc/nginx/certbot/ --non-interactive --agree-tos -m ben@madeofpaper.co.uk -d madeofpaper.co.uk -d www.madeofpaper.co.uk
+
+Renew configured certs as follows. I should be able to run this via cron.
+
+    podman run --pod mop -it \
+      -v $HOME/container-volumes/nginx/letsencrypt:/etc/letsencrypt:Z \
+      -v $HOME/container-volumes/nginx:/etc/nginx:Z \
+      certbot/certbot renew
+
+## File transfer
+
+To copy container volumes (the only data worth keeping) I setup an entry in my ssh config and use rsync to copy the volumes.
+
+    rsync -avz --delete vps:/var/home/core/container-volumes $PWD/backup/
+
+To push changes to any hosted sites on the server I use something like this
+
+    scp {*.html,*.jpg,*.png,*.css} vps:/home/core/container-volumes/nginx/sites/madeofpaper/
+
+
+## References
+
+https://www.redhat.com/sysadmin/podman-run-pods-systemd-services
+https://github.com/containers/podman/blob/main/rootless.md
+https://www.vultr.com/servers/fedora-coreos/
+https://www.redhat.com/sysadmin/container-networking-podman
+
+
