@@ -7,7 +7,7 @@ I had to move my VPS.. I wanted Fedora CoreOS and I found Vultr. Here are my not
 
 ## Initial setup
 
-Signed up to Vultr [here](htts://getvultr.com/lad)
+Signed up to Vultr [here](https://getvultr.com/lad)
 
 Created a Fedora CoreOS VM via the web GUI. (I later used and UI to setup a firewall for the server.)
 
