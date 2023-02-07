@@ -1,0 +1,42 @@
+---
+layout: default
+title: Raid1 and mdadm
+---
+
+I have a home server full of old disks that I use for random storage purposes, the most important
+of which are 2 disks that make up a raid1 10TB storage area for backups.
+
+The raid1 is built using `mdadm`. Its old tech and I should perhaps move to ZFS or BTRFS but currently
+it is what it is.
+
+I recently heard a disk making an odd clunking noise.. it was not loud but it was
+persistent. I removed the drives 1 by 1 to find the culpret and sadly it was one of the 2
+expensive 10TB disks.
+
+Once removed I still had all my data but it was only on 1 disk. Before that failed I needed to
+replace its mirror so my data was 2 disks again.
+
+To do this I needed to:
+
+* get replacement disk of 10TB (or higher)
+* copy partition table from existing disk
+* add the disk to the raid1 array
+* wait for the raid to rebuild (copy data back onto the mirror)
+
+Here are some commands I found very useful
+
+Get info on the raid array:
+
+    mdadm --detail /dev/md127
+
+Dump partition table from existing raid1 disk (sda) to the replacement (sdc)
+
+    sfdisk -d /dev/sda | sfdisk /dev/sdc
+
+Add the replacement disk to the raid1 array
+
+    mdadm --manage /dev/md127 --add /dev/sdc1
+
+Check the progress of the rebuild
+
+    cat /proc/mdstat
