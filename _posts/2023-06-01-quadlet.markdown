@@ -1,0 +1,37 @@
+---
+layout: default
+title: quadlet
+---
+There are many ways to manage containers. I recently discovered quadlet from redhat.
+
+I like the concept of there being not extra services for the containers to run, quadlet
+seems to work by parsing .container files and converting them into systemd .service files.
+
+
+When creating the .container files, I put them in one of the following directories
+
+      /etc/containers/systemd/
+      $HOME/.config/containers/systemd/
+
+The files can tested by using on of the following:
+
+      /usr/libexec/podman/quadlet -dryrun
+      /usr/libexec/podman/quadlet -dryrun -user
+
+An example quadlet .container file  is like so:
+
+```
+[Unit]
+Description=Google Photo sync container
+After=network-online.target
+
+[Container]
+Image=registry.hub.docker.com/gilesknap/gphotos-sync:latest
+PublishPort=8080:8080/tcp
+Exec=/storage
+Volume=/var/lib/volumes/gphotos/config:/config:Z
+Volume=/var/lib/media/Pictures/GooglePhotos:/storage:z
+
+[Install]
+WantedBy=multi-user.target default.target
+```
