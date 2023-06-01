@@ -2,21 +2,10 @@
 layout: default
 title: quadlet
 ---
-There are many ways to manage containers. I recently discovered quadlet from redhat.
+There are many ways to manage containers. I recently discovered quadlet from redhat and it comes with CoreOS/Podman
 
 I like the concept of there being not extra services for the containers to run, quadlet
 seems to work by parsing .container files and converting them into systemd .service files.
-
-
-When creating the .container files, I put them in one of the following directories
-
-      /etc/containers/systemd/
-      $HOME/.config/containers/systemd/
-
-The files can tested by using on of the following:
-
-      /usr/libexec/podman/quadlet -dryrun
-      /usr/libexec/podman/quadlet -dryrun -user
 
 An example quadlet .container file  is like so:
 
@@ -35,3 +24,23 @@ Volume=/var/lib/media/Pictures/GooglePhotos:/storage:z
 [Install]
 WantedBy=multi-user.target default.target
 ```
+
+When creating the .container files, I put them in one of the following directories
+
+      /etc/containers/systemd/
+      $HOME/.config/containers/systemd/
+
+The files can tested by using on of the following:
+
+      /usr/libexec/podman/quadlet -dryrun
+      /usr/libexec/podman/quadlet -dryrun -user
+
+If everything is setup you can run of the following to have the .service files created
+
+      systemctl daemon-reload
+      systemctl --user daemon-reload
+
+
+Then you can start/stop/etc the service like any other systemd service.
+
+      systemctl start gphoto
