@@ -26,10 +26,10 @@ sudo btrfs subvolume snapshot $rootDir $snapshot
 
 echo "Copying bootfiles"
 esp=/boot
-cp -f ${esp}/vmlinuz-linux ${esp}/before_last_update/
-cp -f ${esp}/intel-ucode.img ${esp}/before_last_update/
-cp -f ${esp}/initramfs-linux.img ${esp}/before_last_update/
-cp -f ${esp}/initramfs-linux-fallback.img ${esp}/before_last_update/
+sudo cp -f ${esp}/vmlinuz-linux ${esp}/before_last_update/
+sudo cp -f ${esp}/intel-ucode.img ${esp}/before_last_update/
+sudo cp -f ${esp}/initramfs-linux.img ${esp}/before_last_update/
+sudo cp -f ${esp}/initramfs-linux-fallback.img ${esp}/before_last_update/
 
 echo "Running pacman update"
 sudo pacman -Syyuu
