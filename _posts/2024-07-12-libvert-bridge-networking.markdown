@@ -12,7 +12,8 @@ I wanted my VMs to use my existing network to get IP addresses and access the in
 switch with cat5 cable, this was more tricky than I thought.
 
 I ended up putting a second network card in the server and using it as "bridge" network so my VMs can use that phyical card
-to access the network. There was much trial and error as I'm no good at networking, but it ended up being these steps:
+to access the network, whilst the server can still use the existing card as before.
+There was much trial and error as I'm no good at networking, but it ended up being these steps:
 
 Find the interface name of the new network card:
 
@@ -44,10 +45,12 @@ create a file `bridged-network.xml` with the following content:
 </network>
 ```
 
+Import the bridge network into libvirt:
+
 ```
 virsh net-define bridged-network.xml
 ```
 
 With the above in place (and the server rebooted) I was able to use Cockpit to select the newly added `bridged-network`
 and assign it to the VMs as a "Bridged to LAN" type interface, and they VMs could then get network access and DHCP from
-my networks router.
+my router.
