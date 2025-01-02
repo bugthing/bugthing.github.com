@@ -1,6 +1,6 @@
 ---
 layout: default
-title: distrobox-assemble
+title: Configuring distrobox to assemble an arch container
 ---
 Currently I am using [Bluefin](https://projectbluefin.io/) for my desktop.
 It works really well for ruby developement if you combine `linuxbrew` and `distrobox`.
@@ -20,4 +20,4 @@ init_hooks=ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/podman;
 init_hooks=ln -sf /usr/bin/distrobox-host-exec /usr/local/bin/xdg-open;
 ```
 
-This means I can assemble and arch container for development by running `just assemble arch`
+This means I can assemble an arch container for development by running `just assemble arch`
